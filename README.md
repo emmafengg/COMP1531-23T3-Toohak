@@ -2,34 +2,6 @@
 
 **✨ 🥜 Toohak 🥜 ✨**
 
-## Contents
-
-[[_TOC_]]
-
-## Change Log
-
-* 25/09: A few remaining references to 'assumptions' removed from the spec
-* 10/10: Updated section `4.9` to try and elaborate in more detail about sessions.
-* 11/10: Few minor system updates; Removed a 403 error from swagger for some routes because they weren't applicable
-* 14/10: Correction at the top of `4.1`; Unnecessary `400` error condition for `Quiz ID does not refer to a quiz that this user owns` removed from a number of places where this is covered by `403`.
-* 22/10: `/v1/admin/quiz/trash/empty` has had 400 and 403 error descriptions fixed up; removal of "All sessions for this quiz must be in END state" references.
-* 25/10: Clarity that errors are thrown in order 401, 403, 400. This was in the spec and the swagger had this order in source code, but swagger 
-was not rendering in a way to reflect that.
-* 01/11:
- * Replaced section 5.9 with section on deployment (and removed the previous version which required to store or upload the image file from the URL locally - now you can just store the URL and serve it again)
- * Added to section `5` a clarification about interoperability between iteration 2 and iteration 3 routes.
- * Added missing `401` error to `/v1/admin/quiz/{quizid}/sessions`
- * Clarified interface design can follow a similar pattern to the swagger docs
- * Clarified how to get the 10% bonus marks for typescript compliance
-* 09/11: 
- * Clarified that question position starts at 1
- * Clarified the maximum sessions not in END state is for a particular quiz (only clarified for the benefit of setting a standard, but that will not be tested this term); 
- * Removed "SKIP_COUNTDOWN" from State enum
-* 10/11: Changed `403` error description for sessions from `Valid token is provided, but user is not authorised to view this session` to `Valid token is provided, but user is not an owner of this quiz`
-* 12/11:
- * For `POST /v2/admin/quiz/{quizid}/question` and `POST /v2/admin/quiz/{quizid}/question/{questionid}` we have removed the requirements to ensure that the file is valid by downloading it and checking its actual file type. Instead we've just replaced it with a string check of the file URL itself (with no need to fetch/request/download it). If you haven't implemented the original one, do not implement it. If you have already implemented it, you can talk to your tutor about putting it in as bonus marks.
-* 14/11: Info about where to upload your deployment URL shared (don't stress, you can just email your tutor too)
-
 ## 🫡 0. Aims:
 
 1. Demonstrate effective use of software development tools to build full-stack end-user applications.
@@ -1764,3 +1736,27 @@ Relevant scholarship authorities will be informed if students holding scholarshi
 Do not provide or show your project work to any other person, except for your group and the teaching staff of COMP1531. If you knowingly provide or show your assignment work to another person for any reason, and work derived from it is submitted, you may be penalized, even if the work was submitted without your knowledge or consent. This may apply even if your work is submitted by a third party unknown to you.
 
 Note: you will not be penalized if your work has the potential to be taken without your consent or knowledge.
+
+## Change Log
+
+* 25/09: A few remaining references to 'assumptions' removed from the spec
+* 10/10: Updated section `4.9` to try and elaborate in more detail about sessions.
+* 11/10: Few minor system updates; Removed a 403 error from swagger for some routes because they weren't applicable
+* 14/10: Correction at the top of `4.1`; Unnecessary `400` error condition for `Quiz ID does not refer to a quiz that this user owns` removed from a number of places where this is covered by `403`.
+* 22/10: `/v1/admin/quiz/trash/empty` has had 400 and 403 error descriptions fixed up; removal of "All sessions for this quiz must be in END state" references.
+* 25/10: Clarity that errors are thrown in order 401, 403, 400. This was in the spec and the swagger had this order in source code, but swagger 
+was not rendering in a way to reflect that.
+* 01/11:
+ * Replaced section 5.9 with section on deployment (and removed the previous version which required to store or upload the image file from the URL locally - now you can just store the URL and serve it again)
+ * Added to section `5` a clarification about interoperability between iteration 2 and iteration 3 routes.
+ * Added missing `401` error to `/v1/admin/quiz/{quizid}/sessions`
+ * Clarified interface design can follow a similar pattern to the swagger docs
+ * Clarified how to get the 10% bonus marks for typescript compliance
+* 09/11: 
+ * Clarified that question position starts at 1
+ * Clarified the maximum sessions not in END state is for a particular quiz (only clarified for the benefit of setting a standard, but that will not be tested this term); 
+ * Removed "SKIP_COUNTDOWN" from State enum
+* 10/11: Changed `403` error description for sessions from `Valid token is provided, but user is not authorised to view this session` to `Valid token is provided, but user is not an owner of this quiz`
+* 12/11:
+ * For `POST /v2/admin/quiz/{quizid}/question` and `POST /v2/admin/quiz/{quizid}/question/{questionid}` we have removed the requirements to ensure that the file is valid by downloading it and checking its actual file type. Instead we've just replaced it with a string check of the file URL itself (with no need to fetch/request/download it). If you haven't implemented the original one, do not implement it. If you have already implemented it, you can talk to your tutor about putting it in as bonus marks.
+* 14/11: Info about where to upload your deployment URL shared (don't stress, you can just email your tutor too)
