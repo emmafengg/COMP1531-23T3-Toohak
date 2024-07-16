@@ -1,0 +1,127 @@
+image: comp1531/automarking:latest
+
+stages:
+  - checks
+  # - lint
+  # - autotest
+  - allover
+
+before_script:
+  - npm install
+
+tests:
+  stage: checks
+  only:
+    - master
+    - merge_requests
+  script:
+    - SERVER_LOG=$(mktemp)
+    - npm run start >& $SERVER_LOG &
+    - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || (cat $SERVER_LOG && exit 1)
+    - timeout -s SIGINT 180s npm run test || (cat $SERVER_LOG && exit 1)
+    - kill -SIGINT %1
+    - sleep 2
+    - cat $SERVER_LOG
+
+lint:
+  stage: checks
+  only:
+    - master
+    - merge_requests
+  script:
+    - npm run lint
+
+# authLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of auth.ts"
+#   - npm run authlint
+#   - echo "Finish test"
+
+# quizLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of quiz.ts"
+#   - npm run quizlint
+#   - echo "Finish test"
+
+# otherLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of other.ts"
+#   - npm run otherlint
+#   - echo "Finish test"
+
+# dataStoreLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of dataStore.ts"
+#   - npm run datastorelint
+#   - echo "Finish test"
+
+# serverLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of server.ts"
+#   - npm run serverlint
+#   - echo "Finish test"
+
+# questionLinting:
+#   stage: lint
+#   script:
+#   - echo "lint test of question.ts"
+#   - npm run questionlint
+#   - echo "Finish test"
+
+
+# authTesting:
+#   stage: autotest
+#   script:
+#     - SERVER_LOG=$(mktemp)
+#     - npm run start >& $SERVER_LOG &
+#     - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || exit 1
+#     - timeout -s SIGINT 180s npm run authtest || (cat $SERVER_LOG && exit 1)
+#     - kill -SIGINT %1
+
+# quizTesting:
+#   stage: autotest
+#   script:
+#     - SERVER_LOG=$(mktemp)
+#     - npm run start >& $SERVER_LOG &
+#     - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || exit 1
+#     - timeout -s SIGINT 180s npm run quiztest || (cat $SERVER_LOG && exit 1)
+#     - kill -SIGINT %1
+
+# otherTesting:
+#   stage: autotest
+#   script:
+#     - SERVER_LOG=$(mktemp)
+#     - npm run start >& $SERVER_LOG &
+#     - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || exit 1
+#     - timeout -s SIGINT 180s npm run othertest || (cat $SERVER_LOG && exit 1)
+#     - kill -SIGINT %1
+
+# questionTesting:
+#   stage: autotest
+#   script:
+#     - SERVER_LOG=$(mktemp)
+#     - npm run start >& $SERVER_LOG &
+#     - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || exit 1
+#     - timeout -s SIGINT 180s npm run questiontest || (cat $SERVER_LOG && exit 1)
+#     - kill -SIGINT %1
+
+allOverLinting:
+  stage: allover
+  script:
+  - echo "lint test of question.ts"
+  - npm run lint
+  - echo "Finish test"
+
+allOverTesting:
+  stage: allover
+  script:
+    - SERVER_LOG=$(mktemp)
+    - npm run start >& $SERVER_LOG &
+    - timeout 10s grep -q "⚡️ Server started on port" <(tail -f $SERVER_LOG) || exit 1
+    - timeout -s SIGINT 180s npm run test || (cat $SERVER_LOG && exit 1)
+    - kill -SIGINT %1
